@@ -341,25 +341,52 @@
     .tp-avail-title { font-size: 10px; font-weight: 700; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; }
     .tp-avail-val { font-size: 12px; font-weight: 700; color: var(--text); }
 
-    /* ═══ ABOUT ═══ */
-    .about-card {
-      position: relative; overflow: hidden;
+    /* ═══ VALUE CARDS ═══ */
+    .val-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .val-card {
       background: var(--sf); border: 1px solid var(--bd);
-      border-radius: var(--r); padding: 40px 44px;
-      font-size: 17px; color: var(--sub); line-height: 2;
+      border-radius: var(--r); padding: 32px 30px;
+      transition: all .3s; position: relative; overflow: hidden;
     }
-    .about-card::before {
-      content: '"';
-      position: absolute; top: -20px; left: 24px;
-      font-size: 160px; color: rgba(201,162,89,.06); font-family: Georgia, serif; line-height: 1;
-      pointer-events: none;
-    }
-    .about-card::after {
+    .val-card:hover { border-color: rgba(201,162,89,.3); background: var(--sf2); }
+    .val-card::after {
       content: '';
-      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, var(--gold) 0%, rgba(201,162,89,.2) 100%);
+      position: absolute; left: 0; top: 0; bottom: 0; width: 2.5px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,162,89,.2));
+      opacity: 0; transition: opacity .3s;
     }
-    .about-card strong { color: var(--text); font-weight: 700; }
+    .val-card:hover::after { opacity: 1; }
+    .val-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--gold);
+      opacity: .55; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .val-title { font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 10px; letter-spacing: -.4px; line-height: 1.2; }
+    .val-desc { font-size: 14.5px; color: var(--sub); line-height: 1.8; }
+    .val-desc strong { color: var(--gold); font-weight: 600; }
+
+    /* ═══ WORKFLOW ═══ */
+    .wf-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .wf-step {
+      background: var(--sf); border: 1px solid var(--bd);
+      border-radius: var(--r); padding: 30px 22px;
+      transition: all .3s; position: relative;
+    }
+    .wf-step:hover { border-color: rgba(201,162,89,.3); background: var(--sf2); transform: translateY(-4px); }
+    .wf-step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 42px; font-weight: 900; color: rgba(201,162,89,.1);
+      line-height: 1; margin-bottom: 20px; letter-spacing: -2px;
+    }
+    .wf-ico {
+      width: 42px; height: 42px; border-radius: 11px;
+      background: var(--gdim); border: 1px solid rgba(201,162,89,.2);
+      display: flex; align-items: center; justify-content: center; color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .wf-ico svg { width: 19px; height: 19px; }
+    .wf-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -.2px; }
+    .wf-desc { font-size: 13.5px; color: var(--sub); line-height: 1.7; }
 
     /* ═══ SKILLS WITH BARS ═══ */
     .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -556,10 +583,10 @@
       .hero-grid { grid-template-columns: 1fr; }
       .tech-panel { display: none; }
       .hero-name { font-size: 44px; letter-spacing: -2px; }
-      .skills-grid, .proj-grid { grid-template-columns: 1fr; }
+      .val-grid, .skills-grid, .proj-grid { grid-template-columns: 1fr; }
+      .wf-steps { grid-template-columns: 1fr 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       section { padding: 72px 20px; }
-      .about-card { padding: 28px 24px; }
       .nav-ul { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: rgba(6,8,15,.97); border-bottom: 1px solid var(--bd); padding: 22px 28px; gap: 20px; backdrop-filter: blur(24px); }
       .nav-ul.open { display: flex; }
       .nav-tog { display: block; }
@@ -586,9 +613,9 @@
   <div class="nav-in">
     <a class="nav-logo" href="#hero">Lê Xuân <em>Đạt</em></a>
     <ul class="nav-ul" id="navUl">
-      <li><a href="#about">Về tôi</a></li>
-      <li><a href="#skills">Kỹ năng</a></li>
-      <li><a href="#experience">Kinh nghiệm</a></li>
+      <li><a href="#about">Giá trị</a></li>
+      <li><a href="#skills">Quy trình</a></li>
+      <li><a href="#experience">Hành trình</a></li>
       <li><a href="#projects">Dự án</a></li>
       <li><a href="#contact">Liên hệ</a></li>
     </ul>
@@ -614,7 +641,7 @@
         <p class="hero-role">
           <span id="typed-text" class="typed"></span><span class="cursor-blink"></span>
         </p>
-        <p class="hero-desc">Chuyên phát triển giao diện website pixel-perfect, tối ưu hiệu năng và chuẩn SEO. Thành thạo WordPress, HTML/CSS/SCSS/JS và tích cực ứng dụng AI tools trong quy trình làm việc.</p>
+        <p class="hero-desc">Tôi chuyển Figma thành code pixel-perfect, WordPress thành sản phẩm hoàn chỉnh. 5 năm build website thực cho khách hàng Việt và Nhật — hiện đang tích hợp AI vào mọi bước trong quy trình.</p>
         <div class="chips">
           <a class="chip" href="mailto:lexuandat136@gmail.com">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -698,66 +725,79 @@
 <!-- ══════════════ ABOUT ══════════════ -->
 <section id="about" class="alt">
   <div class="wrap">
-    <p class="lbl">Về tôi</p>
-    <h2 class="stitle">Mục tiêu <em>nghề nghiệp</em></h2>
-    <div class="about-card r">
-      Là một <strong>Frontend Developer</strong> với nhiều năm kinh nghiệm phát triển website, có thế mạnh trong xây dựng giao diện và phát triển các hệ thống website trên nền tảng <strong>WordPress</strong>. Với tinh thần cầu thị và chủ động cập nhật công nghệ mới, không ngừng nâng cao chuyên môn, sẵn sàng chia sẻ, hỗ trợ đồng nghiệp trong công việc để cùng đội ngũ tạo ra những sản phẩm chất lượng, tối ưu hiệu năng và đóng góp thiết thực vào sự phát triển của công ty.
+    <p class="lbl">Tôi làm gì</p>
+    <h2 class="stitle">Những thứ <em>tôi làm tốt</em></h2>
+    <div class="val-grid">
+
+      <div class="val-card r d1">
+        <div class="val-num">01</div>
+        <div class="val-title">Figma → Pixel-Perfect Code</div>
+        <div class="val-desc">Dùng <strong>Figma MCP</strong> để đọc spec trực tiếp từ file design — spacing, màu sắc, component đều lấy đúng từ nguồn, giảm bớt sai sót khi convert sang code.</div>
+      </div>
+
+      <div class="val-card r d2">
+        <div class="val-num">02</div>
+        <div class="val-title">WordPress Full-Stack</div>
+        <div class="val-desc">Thành thạo xây dựng custom theme, viết plugin, cấu hình SEO On-page và tối ưu tốc độ — đủ để cover phần lớn yêu cầu của một dự án <strong>WordPress</strong> từ đầu đến cuối.</div>
+      </div>
+
+      <div class="val-card r d3">
+        <div class="val-num">03</div>
+        <div class="val-title">AI trong quy trình làm việc</div>
+        <div class="val-desc">Dùng <strong>Claude Code</strong> xuyên suốt: lên kế hoạch, viết code, review, debug. Chưa hoàn hảo, nhưng mỗi dự án là một lần tìm cách làm việc tốt hơn.</div>
+      </div>
+
+      <div class="val-card r d4">
+        <div class="val-num">04</div>
+        <div class="val-title">Kinh nghiệm với khách Nhật</div>
+        <div class="val-desc">Hơn 2 năm phối hợp với khách hàng Nhật qua Comtor/PM. Học được cách truyền đạt rõ ràng, estimate thực tế và chú ý kỹ hơn đến từng chi tiết trong spec.</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══════════════ SKILLS ══════════════ -->
+<!-- ══════════════ SKILLS → WORKFLOW ══════════════ -->
 <section id="skills">
   <div class="wrap">
-    <p class="lbl">Kỹ năng</p>
-    <h2 class="stitle">Chuyên môn <em>kỹ thuật</em></h2>
-    <div class="skills-grid">
+    <p class="lbl">Quy trình</p>
+    <h2 class="stitle">Cách tôi <em>làm việc</em></h2>
+    <div class="wf-steps">
 
-      <!-- Frontend -->
-      <div class="sk-card r d1">
-        <div class="sk-icon">
+      <div class="wf-step r d1">
+        <div class="wf-step-num">01</div>
+        <div class="wf-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="wf-title">Nhận brief & phân tích</div>
+        <div class="wf-desc">Đọc yêu cầu, hỏi thêm nếu chưa rõ, confirm scope trước khi bắt đầu — để ít phải sửa về sau.</div>
+      </div>
+
+      <div class="wf-step r d2">
+        <div class="wf-step-num">02</div>
+        <div class="wf-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        </div>
+        <div class="wf-title">Phân tích thiết kế</div>
+        <div class="wf-desc">Dùng Figma MCP để lấy spec trực tiếp: spacing, font-size, màu HEX, component state — hạn chế sai số khi implement.</div>
+      </div>
+
+      <div class="wf-step r d3">
+        <div class="wf-step-num">03</div>
+        <div class="wf-ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <div class="sk-cat">Frontend</div>
-        <div class="sk-tags">
-          <span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">SCSS</span>
-          <span class="sk-tag">Tailwind CSS</span><span class="sk-tag">JavaScript</span><span class="sk-tag">ReactJS</span>
-        </div>
+        <div class="wf-title">Build & AI-assist</div>
+        <div class="wf-desc">Viết code cùng Claude Code, test đa thiết bị & trình duyệt song song — phát hiện lỗi sớm hơn thay vì dồn lại cuối.</div>
       </div>
 
-      <!-- Backend / CMS -->
-      <div class="sk-card r d2">
-        <div class="sk-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <div class="wf-step r d4">
+        <div class="wf-step-num">04</div>
+        <div class="wf-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
-        <div class="sk-cat">Backend / CMS</div>
-        <div class="sk-tags">
-          <span class="sk-tag">PHP</span><span class="sk-tag">WordPress</span><span class="sk-tag">MySQL</span>
-          <span class="sk-tag">Shopify</span><span class="sk-tag">SEO On-page</span>
-        </div>
-      </div>
-
-      <!-- AI Tools -->
-      <div class="sk-card r d3">
-        <div class="sk-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2z"/><path d="M12 8v4l3 3"/></svg>
-        </div>
-        <div class="sk-cat">AI Tools</div>
-        <div class="sk-tags">
-          <span class="sk-tag">Claude Code</span><span class="sk-tag">Figma MCP</span><span class="sk-tag">ChatGPT</span>
-        </div>
-      </div>
-
-      <!-- Tools -->
-      <div class="sk-card r d4">
-        <div class="sk-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-        </div>
-        <div class="sk-cat">Design & Dev Tools</div>
-        <div class="sk-tags">
-          <span class="sk-tag">Figma</span><span class="sk-tag">Git</span><span class="sk-tag">VS Code</span>
-          <span class="sk-tag">Photoshop</span><span class="sk-tag">Illustrator</span>
-        </div>
+        <div class="wf-title">Tối ưu & go-live</div>
+        <div class="wf-desc">Kiểm tra SEO On-page, tốc độ tải và một số điểm accessibility trước khi bàn giao — để bản giao ổn định nhất có thể.</div>
       </div>
 
     </div>
@@ -768,7 +808,7 @@
 <section id="experience" class="alt">
   <div class="wrap">
     <p class="lbl">Kinh nghiệm</p>
-    <h2 class="stitle">Lịch sử <em>làm việc</em></h2>
+    <h2 class="stitle">Hành trình <em>sự nghiệp</em></h2>
     <div class="timeline">
       <div class="tl-line"></div>
 
@@ -784,11 +824,10 @@
           </div>
           <div class="tl-role">Frontend Developer</div>
           <ul class="tl-ul">
-            <li>Chuyển đổi thiết kế Figma thành giao diện website chuẩn pixel-perfect, tương thích đa thiết bị và trình duyệt.</li>
-            <li>Phát triển giao diện và tính năng bằng HTML5, CSS/SCSS, JavaScript, PHP; đảm bảo chuẩn SEO On-page và tối ưu tốc độ tải trang.</li>
-            <li>Ứng dụng Claude Code + Figma MCP để tăng tốc chuyển design sang code, hỗ trợ debug và tối ưu mã nguồn.</li>
-            <li>Phối hợp với PM và Comtor tiếp nhận yêu cầu từ khách hàng Nhật Bản, ước lượng thời gian và báo cáo tiến độ.</li>
-            <li>Tham gia review code và hỗ trợ đồng đội giải quyết các vấn đề kỹ thuật.</li>
+            <li>Build các dự án thực cho khách hàng Nhật Bản — từ file Figma đến giao diện pixel-perfect, bàn giao đúng timeline cam kết.</li>
+            <li>Tích hợp Claude Code + Figma MCP vào toàn bộ workflow, cắt giảm đáng kể thời gian convert design sang code và debug.</li>
+            <li>Phối hợp với PM và Comtor Nhật để tiếp nhận yêu cầu từ khách hàng Nhật Bản — estimate thời gian và báo cáo tiến độ thường xuyên.</li>
+            <li>Review code và mentor intern, góp phần nâng chất lượng output toàn team.</li>
           </ul>
         </div>
       </div>
@@ -805,9 +844,9 @@
           </div>
           <div class="tl-role">WordPress Developer</div>
           <ul class="tl-ul">
-            <li>Chuyển thiết kế Figma thành giao diện website tương thích đa thiết bị và trình duyệt.</li>
-            <li>Phát triển giao diện và tính năng bằng HTML5, CSS/SCSS, JavaScript, PHP; chuẩn SEO On-page và tối ưu tốc độ tải trang.</li>
-            <li>Sử dụng ChatGPT hỗ trợ lập trình, debug và tối ưu code; tham gia review code và hỗ trợ đồng đội.</li>
+            <li>2 năm build website WordPress cho nhiều lĩnh vực — qua đây nắm chắc custom theme development từ zero đến production.</li>
+            <li>Lần đầu dùng ChatGPT như một pair programmer — bắt đầu hình thành tư duy AI-assisted development.</li>
+            <li>Tham gia review code và hỗ trợ đồng nghiệp xử lý các vấn đề kỹ thuật.</li>
           </ul>
         </div>
       </div>
@@ -824,8 +863,8 @@
           </div>
           <div class="tl-role">WordPress Developer</div>
           <ul class="tl-ul">
-            <li>Chuyển thiết kế Figma thành giao diện website tương thích đa thiết bị và trình duyệt.</li>
-            <li>Phát triển giao diện và tính năng bằng HTML5, CSS/SCSS, JavaScript, PHP; chuẩn SEO On-page.</li>
+            <li>Môi trường truyền thông với deadline dày — quen làm việc với tốc độ, chú trọng giao diện và hiệu năng.</li>
+            <li>Xây dựng nền tảng HTML/SCSS/JS/PHP vững chắc qua các dự án đa dạng về ngành nghề.</li>
           </ul>
         </div>
       </div>
@@ -842,8 +881,8 @@
           </div>
           <div class="tl-role">WordPress Developer</div>
           <ul class="tl-ul">
-            <li>Chuyển thiết kế Figma thành giao diện website tương thích đa thiết bị và trình duyệt.</li>
-            <li>Phát triển giao diện và tính năng bằng HTML5, CSS/SCSS, JavaScript, PHP; chuẩn SEO On-page.</li>
+            <li>Điểm khởi đầu — học cách đọc Figma, dịch sang code, và nhận ra mình thực sự thích làm frontend.</li>
+            <li>Từ đây quyết định đi sâu vào WordPress và web development như một con đường dài hạn.</li>
           </ul>
         </div>
       </div>
@@ -855,7 +894,7 @@
 <section id="projects">
   <div class="wrap">
     <p class="lbl">Dự án</p>
-    <h2 class="stitle">Dự án đã <em>thực hiện</em></h2>
+    <h2 class="stitle">Những thứ <em>tôi đã build</em></h2>
     <div class="proj-grid">
 
       <div class="proj-card r d1">
@@ -871,7 +910,7 @@
             <span class="badge">Công ty · 4 người</span>
             <span class="badge">02 — 04/2025</span>
           </div>
-          <p class="proj-desc">Danh mục sản phẩm lọc theo loại; trang tuyển dụng; tin tức và thông tin địa phương kèm bản đồ; form liên hệ tự điền theo nhu cầu.</p>
+          <p class="proj-desc">Website sản phẩm cho khách hàng Nhật — danh mục lọc theo loại, trang tuyển dụng, tin tức địa phương và form liên hệ. Làm việc cùng team 4 người, hoàn thành đúng thời hạn.</p>
           <div class="proj-tech"><span>WordPress</span><span>HTML5</span><span>SCSS</span><span>JavaScript</span><span>PHP</span></div>
         </div>
       </div>
@@ -889,7 +928,7 @@
             <span class="badge">Công ty · 5 người</span>
             <span class="badge">05 — 08/2025</span>
           </div>
-          <p class="proj-desc">Lịch thi đấu, kết quả, bảng xếp hạng; danh sách và hồ sơ cầu thủ; highlight video; tin tức lọc theo danh mục.</p>
+          <p class="proj-desc">CLB J-League yêu cầu website xử lý được lịch thi đấu real-time, hồ sơ cầu thủ chi tiết và highlight video. Build cùng team 5 người trong 4 tháng — phức tạp nhất là phần data management.</p>
           <div class="proj-tech"><span>WordPress</span><span>HTML5</span><span>SCSS</span><span>JavaScript</span><span>PHP</span></div>
         </div>
       </div>
@@ -907,7 +946,7 @@
             <span class="badge solo">Cá nhân · Solo</span>
             <span class="badge">01 — 02/2026</span>
           </div>
-          <p class="proj-desc">Website đa ngôn ngữ (Việt, Anh, Nhật, Hàn); quản lý phòng nghỉ theo danh mục; thư viện ảnh, video; tích hợp hệ thống đặt phòng trực tuyến.</p>
+          <p class="proj-desc">Dự án solo cho khu du lịch Sa Pa — phụ trách từ đầu đến cuối: đa ngôn ngữ 4 tiếng, quản lý phòng theo danh mục, thư viện media và hệ thống đặt phòng online. Phần i18n là thách thức nhớ nhất.</p>
           <div class="proj-tech"><span>WordPress</span><span>HTML5</span><span>SCSS</span><span>JavaScript</span><span>PHP</span></div>
         </div>
       </div>
@@ -925,7 +964,7 @@
             <span class="badge solo">Cá nhân · Solo</span>
             <span class="badge">09 — 10/2026</span>
           </div>
-          <p class="proj-desc">Quản lý dòng xe, giá và thông số kỹ thuật; form đăng ký lái thử, nhận báo giá; thư viện video YouTube tích hợp và trang tin tức.</p>
+          <p class="proj-desc">Website cho đại lý xe sang — cần giao diện chỉn chu và đầy đủ thông tin. Tự phụ trách catalog xe, form đăng ký lái thử, tích hợp YouTube và trang tin tức trong khoảng 2 tháng.</p>
           <div class="proj-tech"><span>WordPress</span><span>HTML5</span><span>SCSS</span><span>JavaScript</span><span>PHP</span></div>
         </div>
       </div>
@@ -938,7 +977,7 @@
 <section id="education" class="alt">
   <div class="wrap">
     <p class="lbl">Học vấn</p>
-    <h2 class="stitle">Trình độ <em>học vấn</em></h2>
+    <h2 class="stitle">Nền tảng <em>học thuật</em></h2>
     <div class="edu-card r">
       <div class="edu-ico">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -959,6 +998,7 @@
   <div class="wrap">
     <p class="lbl">Liên hệ</p>
     <h2 class="stitle">Kết nối <em>với tôi</em></h2>
+    <p style="font-size:16px;color:var(--sub);max-width:480px;margin-bottom:40px;line-height:1.9;margin-top:-28px;">Hiện đang tìm kiếm cơ hội mới. Nếu bạn có vị trí phù hợp hoặc muốn trao đổi thêm, tôi rất vui được lắng nghe.</p>
     <div class="contact-grid">
       <a class="cc r d1" href="mailto:lexuandat136@gmail.com">
         <div class="cc-ico">
@@ -1040,7 +1080,7 @@
   }, {passive:true});
 
   /* ── TYPEWRITER ── */
-  const roles  = ['Frontend Developer', 'WordPress Expert', 'Pixel-Perfect Builder', 'AI-Powered Coder'];
+  const roles  = ['Frontend Developer', 'WordPress Developer', 'Pixel-Perfect Builder', 'Web Developer'];
   const target = document.getElementById('typed-text');
   let ri = 0, ci = 0, del = false;
   function type() {
